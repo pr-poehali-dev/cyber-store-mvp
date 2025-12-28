@@ -30,22 +30,29 @@ export default function Header({ view, onViewChange }: HeaderProps) {
               onClick={() => onViewChange('store')}
               className={`text-sm font-medium transition-colors ${view === 'store' ? 'text-cyber-purple' : 'text-gray-400 hover:text-white'}`}
             >
-              Магазин
+              Приложения
+            </button>
+            <button 
+              onClick={() => onViewChange('store')}
+              className="text-sm font-medium text-gray-400 hover:text-white transition-colors"
+            >
+              Игры
+            </button>
+            <button className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
+              Блог
             </button>
             <button 
               onClick={() => onViewChange('developer')}
               className={`text-sm font-medium transition-colors ${view === 'developer' ? 'text-cyber-purple' : 'text-gray-400 hover:text-white'}`}
             >
-              Для разработчиков
+              Разработчикам
             </button>
-            <Button variant="outline" className="border-cyber-purple/50 hover:bg-cyber-purple/20">
-              <Icon name="LogIn" size={16} className="mr-2" />
-              Войти
-            </Button>
+            <button className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
+              Помощь
+            </button>
             <Dialog>
               <DialogTrigger asChild>
-                <Button className="bg-gradient-to-r from-cyber-purple to-cyber-pink hover:opacity-90">
-                  <Icon name="UserPlus" size={16} className="mr-2" />
+                <Button className="bg-cyber-purple hover:bg-cyber-purple/80">
                   Регистрация
                 </Button>
               </DialogTrigger>
@@ -53,34 +60,34 @@ export default function Header({ view, onViewChange }: HeaderProps) {
                 <DialogHeader>
                   <DialogTitle className="text-2xl font-bold glow-text">Регистрация</DialogTitle>
                   <DialogDescription className="text-gray-400">
-                    Выберите тип аккаунта и заполните данные
+                    Выберите, как вы хотите зарегистрироваться
                   </DialogDescription>
                 </DialogHeader>
                 <div className="space-y-6 mt-4">
                   <div className="grid grid-cols-2 gap-4">
                     <button
                       onClick={() => setRegisterType('user')}
-                      className={`p-4 rounded-lg border-2 transition-all ${
+                      className={`p-6 rounded-lg border-2 transition-all ${
                         registerType === 'user'
-                          ? 'border-cyber-purple bg-cyber-purple/10'
+                          ? 'border-cyber-purple bg-cyber-purple/10 glow-border'
                           : 'border-cyber-purple/30 hover:border-cyber-purple/50'
                       }`}
                     >
-                      <Icon name="User" size={32} className="mx-auto mb-2 text-cyber-purple" />
-                      <p className="font-medium">Обычная</p>
-                      <p className="text-xs text-gray-400 mt-1">Для скачивания приложений</p>
+                      <Icon name="User" size={40} className="mx-auto mb-3 text-cyber-purple" />
+                      <p className="font-bold text-lg">Как потребитель</p>
+                      <p className="text-xs text-gray-400 mt-2">Скачивайте и используйте приложения</p>
                     </button>
                     <button
                       onClick={() => setRegisterType('developer')}
-                      className={`p-4 rounded-lg border-2 transition-all ${
+                      className={`p-6 rounded-lg border-2 transition-all ${
                         registerType === 'developer'
-                          ? 'border-cyber-pink bg-cyber-pink/10'
+                          ? 'border-cyber-pink bg-cyber-pink/10 glow-border'
                           : 'border-cyber-purple/30 hover:border-cyber-purple/50'
                       }`}
                     >
-                      <Icon name="Code" size={32} className="mx-auto mb-2 text-cyber-pink" />
-                      <p className="font-medium">Для разработчиков</p>
-                      <p className="text-xs text-gray-400 mt-1">Публикация приложений</p>
+                      <Icon name="Code" size={40} className="mx-auto mb-3 text-cyber-pink" />
+                      <p className="font-bold text-lg">Как разработчик</p>
+                      <p className="text-xs text-gray-400 mt-2">Публикуйте свои приложения</p>
                     </button>
                   </div>
 
