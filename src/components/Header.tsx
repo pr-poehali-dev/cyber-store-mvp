@@ -17,9 +17,11 @@ export default function Header({ view, onViewChange }: HeaderProps) {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyber-purple to-cyber-pink flex items-center justify-center animate-glow-pulse">
-              <Icon name="Zap" className="text-cyber-dark" size={24} />
-            </div>
+            <img 
+              src="https://cdn.poehali.dev/files/IMG_4821.png" 
+              alt="CYBER-STORE" 
+              className="w-12 h-12 rounded-full animate-glow-pulse"
+            />
             <h1 className="text-2xl font-bold glow-text">CYBER-STORE</h1>
           </div>
           
