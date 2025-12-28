@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 const mockApps = [
   {
@@ -79,6 +80,7 @@ export default function Index() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPlatform, setSelectedPlatform] = useState('all');
   const [view, setView] = useState<'store' | 'developer'>('store');
+  const [registerType, setRegisterType] = useState<'user' | 'developer'>('user');
 
   const filteredApps = mockApps.filter(app => {
     const matchesSearch = app.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -113,9 +115,93 @@ export default function Index() {
                 Для разработчиков
               </button>
               <Button variant="outline" className="border-cyber-purple/50 hover:bg-cyber-purple/20">
-                <Icon name="User" size={16} className="mr-2" />
+                <Icon name="LogIn" size={16} className="mr-2" />
                 Войти
               </Button>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button className="bg-gradient-to-r from-cyber-purple to-cyber-pink hover:opacity-90">
+                    <Icon name="UserPlus" size={16} className="mr-2" />
+                    Регистрация
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="bg-cyber-dark border-cyber-purple/50">
+                  <DialogHeader>
+                    <DialogTitle className="text-2xl font-bold glow-text">Регистрация</DialogTitle>
+                    <DialogDescription className="text-gray-400">
+                      Выберите тип аккаунта и заполните данные
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-6 mt-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <button
+                        onClick={() => setRegisterType('user')}
+                        className={`p-4 rounded-lg border-2 transition-all ${
+                          registerType === 'user'
+                            ? 'border-cyber-purple bg-cyber-purple/10'
+                            : 'border-cyber-purple/30 hover:border-cyber-purple/50'
+                        }`}
+                      >
+                        <Icon name="User" size={32} className="mx-auto mb-2 text-cyber-purple" />
+                        <p className="font-medium">Обычная</p>
+                        <p className="text-xs text-gray-400 mt-1">Для скачивания приложений</p>
+                      </button>
+                      <button
+                        onClick={() => setRegisterType('developer')}
+                        className={`p-4 rounded-lg border-2 transition-all ${
+                          registerType === 'developer'
+                            ? 'border-cyber-pink bg-cyber-pink/10'
+                            : 'border-cyber-purple/30 hover:border-cyber-purple/50'
+                        }`}
+                      >
+                        <Icon name="Code" size={32} className="mx-auto mb-2 text-cyber-pink" />
+                        <p className="font-medium">Для разработчиков</p>
+                        <p className="text-xs text-gray-400 mt-1">Публикация приложений</p>
+                      </button>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div>
+                        <label className="text-sm font-medium mb-2 block">Email</label>
+                        <Input 
+                          type="email" 
+                          placeholder="your@email.com" 
+                          className="bg-cyber-darker border-cyber-purple/30" 
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium mb-2 block">Имя пользователя</label>
+                        <Input 
+                          placeholder="username" 
+                          className="bg-cyber-darker border-cyber-purple/30" 
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium mb-2 block">Пароль</label>
+                        <Input 
+                          type="password" 
+                          placeholder="••••••••" 
+                          className="bg-cyber-darker border-cyber-purple/30" 
+                        />
+                      </div>
+                      {registerType === 'developer' && (
+                        <div>
+                          <label className="text-sm font-medium mb-2 block">Название студии (опционально)</label>
+                          <Input 
+                            placeholder="Your Studio Name" 
+                            className="bg-cyber-darker border-cyber-purple/30" 
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    <Button className="w-full bg-gradient-to-r from-cyber-purple to-cyber-pink hover:opacity-90">
+                      <Icon name="UserPlus" size={16} className="mr-2" />
+                      Зарегистрироваться
+                    </Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </nav>
           </div>
         </div>
