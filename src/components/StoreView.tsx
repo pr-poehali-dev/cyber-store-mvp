@@ -24,6 +24,26 @@ interface StoreViewProps {
   setSelectedPlatform: (platform: string) => void;
 }
 
+const categories = [
+  { name: 'Игры', icon: 'Gamepad2', color: 'from-orange-500 to-red-500' },
+  { name: 'Инструменты', icon: 'Wrench', color: 'from-purple-500 to-pink-500' },
+  { name: 'Музыка', icon: 'Music', color: 'from-green-500 to-emerald-500' },
+  { name: 'Финансы', icon: 'Wallet', color: 'from-blue-500 to-cyan-500' },
+  { name: 'Графика', icon: 'Palette', color: 'from-pink-500 to-rose-500' },
+  { name: 'Образование', icon: 'GraduationCap', color: 'from-indigo-500 to-violet-500' },
+];
+
+const featuredApps = [
+  { icon: '🎮', name: 'Neon Runner' },
+  { icon: '💻', name: 'Code Editor Pro' },
+  { icon: '🎵', name: 'Synth Wave' },
+  { icon: '💎', name: 'Crypto Wallet' },
+  { icon: '📱', name: 'AR Scanner' },
+  { icon: '🎨', name: 'Pixel Art Studio' },
+  { icon: '🚀', name: 'Space Explorer' },
+  { icon: '🎯', name: 'Target Master' },
+];
+
 export default function StoreView({ 
   apps, 
   searchQuery, 
@@ -33,30 +53,117 @@ export default function StoreView({
 }: StoreViewProps) {
   return (
     <main className="container mx-auto px-4 py-8">
+      {/* Hero Section */}
       <section className="mb-12 animate-fade-in">
-        <div className="relative rounded-2xl overflow-hidden bg-gradient-to-r from-cyber-purple/20 via-cyber-pink/20 to-cyber-blue/20 p-8 md:p-12 border border-cyber-purple/30 glow-border">
-          <div className="relative z-10">
+        <div className="relative rounded-2xl overflow-hidden bg-gradient-to-r from-cyber-purple/20 via-cyber-pink/20 to-cyber-blue/20 p-8 md:p-16 border border-cyber-purple/30 glow-border">
+          <div className="relative z-10 max-w-3xl">
             <h2 className="text-4xl md:text-6xl font-bold mb-4 glow-text">
-              Свободный магазин приложений
+              Официальный магазин приложений для Android
             </h2>
-            <p className="text-xl text-gray-300 mb-6 max-w-2xl">
-              Публикуй, находи и скачивай приложения без ограничений. Создано для инди-разработчиков.
+            <p className="text-xl text-gray-300 mb-6">
+              Скачивайте любимые приложения и игры в киберпанк стиле. Безопасно. Быстро. Свободно.
             </p>
-            <div className="flex flex-wrap gap-4">
-              <Button className="bg-cyber-purple hover:bg-cyber-purple/80 text-white">
-                <Icon name="Download" size={20} className="mr-2" />
-                Скачать приложения
-              </Button>
-              <Button variant="outline" className="border-cyber-pink text-cyber-pink hover:bg-cyber-pink/20">
-                <Icon name="Upload" size={20} className="mr-2" />
-                Опубликовать своё
-              </Button>
-            </div>
+            <Button className="bg-cyber-purple hover:bg-cyber-purple/80 text-white text-lg px-8 py-6 h-auto">
+              <Icon name="Download" size={24} className="mr-2" />
+              Скачать CYBER-STORE
+            </Button>
           </div>
         </div>
       </section>
 
+      {/* Animated App Logos */}
+      <section className="mb-12 overflow-hidden">
+        <div className="flex gap-4 animate-marquee whitespace-nowrap">
+          {[...featuredApps, ...featuredApps].map((app, i) => (
+            <div key={i} className="inline-flex items-center gap-3 px-6 py-4 bg-cyber-dark/50 border border-cyber-purple/30 rounded-xl">
+              <span className="text-3xl">{app.icon}</span>
+              <span className="text-gray-300 font-medium">{app.name}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Categories */}
+      <section className="mb-12">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-2xl font-bold text-white">Категории</h3>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {categories.map((cat) => (
+            <button
+              key={cat.name}
+              className="group relative p-6 rounded-xl bg-cyber-dark border border-cyber-purple/30 hover:border-cyber-purple transition-all hover:shadow-lg hover:shadow-cyber-purple/20"
+            >
+              <div className={`w-12 h-12 mx-auto mb-3 rounded-lg bg-gradient-to-br ${cat.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                <Icon name={cat.icon as any} size={24} className="text-white" />
+              </div>
+              <p className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors">{cat.name}</p>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* Games Section */}
+      <section className="mb-12">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-2xl font-bold text-white">Игры на любой вкус</h3>
+          <Button variant="ghost" className="text-cyber-purple hover:text-cyber-purple/80">
+            Все игры
+            <Icon name="ArrowRight" size={16} className="ml-2" />
+          </Button>
+        </div>
+        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+          {apps.filter(app => app.category === 'Games').map((app) => (
+            <div
+              key={app.id}
+              className="flex-none w-48 group cursor-pointer"
+            >
+              <div className="relative mb-3 aspect-square rounded-xl bg-gradient-to-br from-cyber-purple/20 to-cyber-pink/20 border border-cyber-purple/30 flex items-center justify-center group-hover:border-cyber-purple transition-all">
+                <span className="text-6xl group-hover:scale-110 transition-transform">{app.icon}</span>
+              </div>
+              <h4 className="font-semibold text-white mb-1 truncate group-hover:text-cyber-purple transition-colors">{app.name}</h4>
+              <p className="text-sm text-gray-400 mb-2">{app.developer}</p>
+              <div className="flex items-center gap-1 text-sm text-gray-400">
+                <Icon name="Star" size={14} className="text-yellow-400 fill-yellow-400" />
+                <span>{app.rating}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Apps Section */}
+      <section className="mb-12">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-2xl font-bold text-white">Популярные приложения</h3>
+          <Button variant="ghost" className="text-cyber-purple hover:text-cyber-purple/80">
+            Все приложения
+            <Icon name="ArrowRight" size={16} className="ml-2" />
+          </Button>
+        </div>
+        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+          {apps.filter(app => app.category !== 'Games').slice(0, 6).map((app) => (
+            <div
+              key={app.id}
+              className="flex-none w-48 group cursor-pointer"
+            >
+              <div className="relative mb-3 aspect-square rounded-xl bg-gradient-to-br from-cyber-blue/20 to-cyber-purple/20 border border-cyber-purple/30 flex items-center justify-center group-hover:border-cyber-purple transition-all">
+                <span className="text-6xl group-hover:scale-110 transition-transform">{app.icon}</span>
+              </div>
+              <h4 className="font-semibold text-white mb-1 truncate group-hover:text-cyber-purple transition-colors">{app.name}</h4>
+              <p className="text-sm text-gray-400 mb-2">{app.developer}</p>
+              <div className="flex items-center gap-1 text-sm text-gray-400">
+                <Icon name="Star" size={14} className="text-yellow-400 fill-yellow-400" />
+                <span>{app.rating}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Search & Filter */}
       <section className="mb-8 animate-slide-up">
+        <h3 className="text-2xl font-bold text-white mb-6">Найти приложение</h3>
         <div className="flex flex-col md:flex-row gap-4 mb-6">
           <div className="flex-1 relative">
             <Icon name="Search" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
