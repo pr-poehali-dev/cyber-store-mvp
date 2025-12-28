@@ -25,7 +25,7 @@ export default function Header({ view, onViewChange }: HeaderProps) {
             <h1 className="text-2xl font-bold glow-text">CYBER-STORE</h1>
           </div>
           
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden lg:flex items-center gap-8 flex-1 justify-center">
             <button 
               onClick={() => onViewChange('store')}
               className={`text-sm font-medium transition-colors ${view === 'store' ? 'text-cyber-purple' : 'text-gray-400 hover:text-white'}`}
@@ -50,9 +50,15 @@ export default function Header({ view, onViewChange }: HeaderProps) {
             <button className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
               Помощь
             </button>
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
+              <Icon name="Search" size={20} />
+            </Button>
             <Dialog>
               <DialogTrigger asChild>
-                <Button className="bg-cyber-purple hover:bg-cyber-purple/80">
+                <Button className="bg-cyber-purple hover:bg-cyber-purple/80 hidden md:flex">
                   Регистрация
                 </Button>
               </DialogTrigger>
@@ -133,7 +139,7 @@ export default function Header({ view, onViewChange }: HeaderProps) {
                 </div>
               </DialogContent>
             </Dialog>
-          </nav>
+          </div>
         </div>
       </div>
     </header>
