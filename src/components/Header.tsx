@@ -120,9 +120,9 @@ export default function Header({ view, onViewChange }: HeaderProps) {
                     </div>
                     {registerType === 'developer' && (
                       <div>
-                        <label className="text-sm font-medium mb-2 block">Название студии (опционально)</label>
+                        <label className="text-sm font-medium mb-2 block">Название студии (необязательно)</label>
                         <Input 
-                          placeholder="Your Studio Name" 
+                          placeholder="Моя студия" 
                           className="bg-cyber-darker border-cyber-purple/30" 
                         />
                       </div>
