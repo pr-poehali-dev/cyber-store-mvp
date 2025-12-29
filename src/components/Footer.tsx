@@ -32,7 +32,9 @@ export default function Footer() {
             <div className="flex gap-4">
               <Icon name="Github" size={20} className="text-gray-400 hover:text-cyber-purple cursor-pointer transition-colors" />
               <Icon name="Twitter" size={20} className="text-gray-400 hover:text-cyber-purple cursor-pointer transition-colors" />
-              <Icon name="Mail" size={20} className="text-gray-400 hover:text-cyber-purple cursor-pointer transition-colors" />
+              <a href="mailto:aidarchik.maa@gmail.com">
+                <Icon name="Mail" size={20} className="text-gray-400 hover:text-cyber-purple cursor-pointer transition-colors" />
+              </a>
             </div>
           </div>
         </div>
