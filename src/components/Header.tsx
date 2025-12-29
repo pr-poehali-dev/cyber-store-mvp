@@ -53,12 +53,9 @@ export default function Header({ view, onViewChange }: HeaderProps) {
           </nav>
 
           <div className="flex items-center gap-3">
-            <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
-              <Icon name="Search" size={20} />
-            </Button>
             <Dialog>
               <DialogTrigger asChild>
-                <Button className="bg-cyber-purple hover:bg-cyber-purple/80 hidden md:flex">
+                <Button className="bg-cyber-purple hover:bg-cyber-purple/80">
                   Регистрация
                 </Button>
               </DialogTrigger>
