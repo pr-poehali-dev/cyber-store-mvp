@@ -76,13 +76,15 @@ const mockApps = [
 export default function Index() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPlatform, setSelectedPlatform] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const [view, setView] = useState<'store' | 'developer'>('store');
 
   const filteredApps = mockApps.filter(app => {
     const matchesSearch = app.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          app.developer.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesPlatform = selectedPlatform === 'all' || app.platform === selectedPlatform;
-    return matchesSearch && matchesPlatform;
+    const matchesCategory = selectedCategory === 'all' || app.category === selectedCategory;
+    return matchesSearch && matchesPlatform && matchesCategory;
   });
 
   return (
@@ -96,6 +98,8 @@ export default function Index() {
           setSearchQuery={setSearchQuery}
           selectedPlatform={selectedPlatform}
           setSelectedPlatform={setSelectedPlatform}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
         />
       ) : (
         <DeveloperPanel mockApps={mockApps} />

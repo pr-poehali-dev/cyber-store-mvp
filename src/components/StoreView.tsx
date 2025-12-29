@@ -22,15 +22,17 @@ interface StoreViewProps {
   setSearchQuery: (query: string) => void;
   selectedPlatform: string;
   setSelectedPlatform: (platform: string) => void;
+  selectedCategory: string;
+  setSelectedCategory: (category: string) => void;
 }
 
 const categories = [
-  { name: 'Игры', icon: 'Gamepad2', color: 'from-orange-500 to-red-500' },
-  { name: 'Инструменты', icon: 'Wrench', color: 'from-purple-500 to-pink-500' },
-  { name: 'Музыка', icon: 'Music', color: 'from-green-500 to-emerald-500' },
-  { name: 'Финансы', icon: 'Wallet', color: 'from-blue-500 to-cyan-500' },
-  { name: 'Графика', icon: 'Palette', color: 'from-pink-500 to-rose-500' },
-  { name: 'Образование', icon: 'GraduationCap', color: 'from-indigo-500 to-violet-500' },
+  { name: 'Игры', icon: 'Gamepad2', color: 'from-orange-500 to-red-500', filter: 'Games' },
+  { name: 'Инструменты', icon: 'Wrench', color: 'from-purple-500 to-pink-500', filter: 'Tools' },
+  { name: 'Музыка', icon: 'Music', color: 'from-green-500 to-emerald-500', filter: 'Music' },
+  { name: 'Финансы', icon: 'Wallet', color: 'from-blue-500 to-cyan-500', filter: 'Finance' },
+  { name: 'Графика', icon: 'Palette', color: 'from-pink-500 to-rose-500', filter: 'Graphics' },
+  { name: 'Образование', icon: 'GraduationCap', color: 'from-indigo-500 to-violet-500', filter: 'Education' },
 ];
 
 const featuredApps = [
@@ -49,8 +51,15 @@ export default function StoreView({
   searchQuery, 
   setSearchQuery, 
   selectedPlatform, 
-  setSelectedPlatform 
+  setSelectedPlatform,
+  selectedCategory,
+  setSelectedCategory
 }: StoreViewProps) {
+  
+  const handleCategoryClick = (category: string) => {
+    setSelectedCategory(category);
+    window.scrollTo({ top: document.getElementById('apps-list')?.offsetTop || 0, behavior: 'smooth' });
+  };
   return (
     <main className="container mx-auto px-4 py-8">
       {/* Hero Section */}
@@ -92,6 +101,7 @@ export default function StoreView({
           {categories.map((cat) => (
             <button
               key={cat.name}
+              onClick={() => handleCategoryClick(cat.filter)}
               className="group relative p-6 rounded-xl bg-cyber-dark border border-cyber-purple/30 hover:border-cyber-purple transition-all hover:shadow-lg hover:shadow-cyber-purple/20"
             >
               <div className={`w-12 h-12 mx-auto mb-3 rounded-lg bg-gradient-to-br ${cat.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
@@ -162,7 +172,7 @@ export default function StoreView({
       </section>
 
       {/* Search & Filter */}
-      <section className="mb-8 animate-slide-up">
+      <section id="apps-list" className="mb-8 animate-slide-up">
         <h3 className="text-2xl font-bold text-white mb-6">Найти приложение</h3>
         <div className="flex flex-col md:flex-row gap-4 mb-6">
           <div className="flex-1 relative">
@@ -175,13 +185,20 @@ export default function StoreView({
             />
           </div>
           
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
+            <Button
+              variant={selectedCategory === 'all' ? 'default' : 'outline'}
+              onClick={() => setSelectedCategory('all')}
+              className={selectedCategory === 'all' ? 'bg-cyber-purple' : 'border-cyber-purple/30'}
+            >
+              Все категории
+            </Button>
             <Button
               variant={selectedPlatform === 'all' ? 'default' : 'outline'}
               onClick={() => setSelectedPlatform('all')}
               className={selectedPlatform === 'all' ? 'bg-cyber-purple' : 'border-cyber-purple/30'}
             >
-              Все
+              Все платформы
             </Button>
             <Button
               variant={selectedPlatform === 'Android' ? 'default' : 'outline'}
