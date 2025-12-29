@@ -3,6 +3,7 @@ import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { useToast } from '@/hooks/use-toast';
 
 interface HeaderProps {
   view: 'store' | 'developer';
@@ -11,6 +12,35 @@ interface HeaderProps {
 
 export default function Header({ view, onViewChange }: HeaderProps) {
   const [registerType, setRegisterType] = useState<'user' | 'developer'>('user');
+  const [isOpen, setIsOpen] = useState(false);
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [studioName, setStudioName] = useState('');
+  const { toast } = useToast();
+
+  const handleRegister = () => {
+    if (!email || !username || !password) {
+      toast({
+        title: 'Ошибка',
+        description: 'Заполните все обязательные поля',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    toast({
+      title: 'Успешно!',
+      description: `Добро пожаловать, ${username}! Вы зарегистрированы как ${registerType === 'user' ? 'потребитель' : 'разработчик'}.`,
+    });
+
+    setIsOpen(false);
+    setEmail('');
+    setUsername('');
+    setPassword('');
+    setStudioName('');
+    setRegisterType('user');
+  };
 
   return (
     <header className="border-b border-cyber-purple/30 bg-cyber-dark/80 backdrop-blur-lg sticky top-0 z-50">
@@ -53,7 +83,7 @@ export default function Header({ view, onViewChange }: HeaderProps) {
           </nav>
 
           <div className="flex items-center gap-3">
-            <Dialog>
+            <Dialog open={isOpen} onOpenChange={setIsOpen}>
               <DialogTrigger asChild>
                 <Button className="bg-cyber-purple hover:bg-cyber-purple/80">
                   Регистрация
@@ -100,6 +130,8 @@ export default function Header({ view, onViewChange }: HeaderProps) {
                       <Input 
                         type="email" 
                         placeholder="your@email.com" 
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         className="bg-cyber-darker border-cyber-purple/30" 
                       />
                     </div>
@@ -107,6 +139,8 @@ export default function Header({ view, onViewChange }: HeaderProps) {
                       <label className="text-sm font-medium mb-2 block">Имя пользователя</label>
                       <Input 
                         placeholder="username" 
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                         className="bg-cyber-darker border-cyber-purple/30" 
                       />
                     </div>
@@ -115,6 +149,8 @@ export default function Header({ view, onViewChange }: HeaderProps) {
                       <Input 
                         type="password" 
                         placeholder="••••••••" 
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         className="bg-cyber-darker border-cyber-purple/30" 
                       />
                     </div>
@@ -123,13 +159,18 @@ export default function Header({ view, onViewChange }: HeaderProps) {
                         <label className="text-sm font-medium mb-2 block">Название студии (необязательно)</label>
                         <Input 
                           placeholder="Моя студия" 
+                          value={studioName}
+                          onChange={(e) => setStudioName(e.target.value)}
                           className="bg-cyber-darker border-cyber-purple/30" 
                         />
                       </div>
                     )}
                   </div>
 
-                  <Button className="w-full bg-gradient-to-r from-cyber-purple to-cyber-pink hover:opacity-90">
+                  <Button 
+                    onClick={handleRegister}
+                    className="w-full bg-gradient-to-r from-cyber-purple to-cyber-pink hover:opacity-90"
+                  >
                     <Icon name="UserPlus" size={16} className="mr-2" />
                     Зарегистрироваться
                   </Button>
