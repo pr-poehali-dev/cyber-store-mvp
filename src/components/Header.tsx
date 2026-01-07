@@ -85,8 +85,8 @@ export default function Header({ view, onViewChange }: HeaderProps) {
 
           <div className="flex items-center gap-3">
             {isRegistered ? (
-              <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-cyber-purple/20 border border-cyber-purple/50 glow-border">
-                <Icon name="User" size={20} className="text-cyber-purple" />
+              <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-500/20 border border-cyan-400/50 shadow-[0_0_15px_rgba(34,211,238,0.3)]">
+                <Icon name="User" size={20} className="text-cyan-400" />
                 <span className="text-sm font-medium">{username}</span>
               </div>
             ) : (
