@@ -17,6 +17,7 @@ export default function Header({ view, onViewChange }: HeaderProps) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [studioName, setStudioName] = useState('');
+  const [isRegistered, setIsRegistered] = useState(false);
   const { toast } = useToast();
 
   const handleRegister = () => {
@@ -34,9 +35,9 @@ export default function Header({ view, onViewChange }: HeaderProps) {
       description: `Добро пожаловать, ${username}! Вы зарегистрированы как ${registerType === 'user' ? 'потребитель' : 'разработчик'}.`,
     });
 
+    setIsRegistered(true);
     setIsOpen(false);
     setEmail('');
-    setUsername('');
     setPassword('');
     setStudioName('');
     setRegisterType('user');
@@ -83,12 +84,18 @@ export default function Header({ view, onViewChange }: HeaderProps) {
           </nav>
 
           <div className="flex items-center gap-3">
-            <Dialog open={isOpen} onOpenChange={setIsOpen}>
-              <DialogTrigger asChild>
-                <Button className="bg-cyber-purple hover:bg-cyber-purple/80">
-                  Регистрация
-                </Button>
-              </DialogTrigger>
+            {isRegistered ? (
+              <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-cyber-purple/20 border border-cyber-purple/50 glow-border">
+                <Icon name="User" size={20} className="text-cyber-purple" />
+                <span className="text-sm font-medium">{username}</span>
+              </div>
+            ) : (
+              <Dialog open={isOpen} onOpenChange={setIsOpen}>
+                <DialogTrigger asChild>
+                  <Button className="bg-cyber-purple hover:bg-cyber-purple/80">
+                    Регистрация
+                  </Button>
+                </DialogTrigger>
               <DialogContent className="bg-cyber-dark border-cyber-purple/50">
                 <DialogHeader>
                   <DialogTitle className="text-2xl font-bold glow-text">Регистрация</DialogTitle>
@@ -177,6 +184,7 @@ export default function Header({ view, onViewChange }: HeaderProps) {
                 </div>
               </DialogContent>
             </Dialog>
+            )}
           </div>
         </div>
       </div>
