@@ -88,24 +88,30 @@ export default function Index() {
   });
 
   return (
-    <div className="min-h-screen bg-cyber-darker">
-      <Header view={view} onViewChange={setView} />
-      
-      {view === 'store' ? (
-        <StoreView 
-          apps={filteredApps}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          selectedPlatform={selectedPlatform}
-          setSelectedPlatform={setSelectedPlatform}
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-        />
-      ) : (
-        <DeveloperPanel mockApps={mockApps} />
-      )}
+    <div className="min-h-screen bg-cyber-darker relative">
+      <div 
+        className="fixed inset-0 bg-cover bg-center bg-no-repeat opacity-20 z-0"
+        style={{ backgroundImage: 'url(https://cdn.poehali.dev/files/рррр.jpg)' }}
+      />
+      <div className="relative z-10">
+        <Header view={view} onViewChange={setView} />
+        
+        {view === 'store' ? (
+          <StoreView 
+            apps={filteredApps}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            selectedPlatform={selectedPlatform}
+            setSelectedPlatform={setSelectedPlatform}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+          />
+        ) : (
+          <DeveloperPanel mockApps={mockApps} />
+        )}
 
-      <Footer />
+        <Footer />
+      </div>
     </div>
   );
 }
