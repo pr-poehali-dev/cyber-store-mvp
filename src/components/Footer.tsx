@@ -30,7 +30,9 @@ export default function Footer() {
           <div>
             <h3 className="font-bold mb-4 text-cyber-purple">Связаться</h3>
             <div className="flex gap-4">
-              <Icon name="Github" size={20} className="text-gray-400 hover:text-cyber-purple cursor-pointer transition-colors" />
+              <a href="https://github.com/Aidar2007-ui" target="_blank" rel="noopener noreferrer">
+                <Icon name="Github" size={20} className="text-gray-400 hover:text-cyber-purple cursor-pointer transition-colors" />
+              </a>
               <a href="https://x.com/aidarmiftav1e?s=21" target="_blank" rel="noopener noreferrer">
                 <Icon name="Twitter" size={20} className="text-gray-400 hover:text-cyber-purple cursor-pointer transition-colors" />
               </a>
