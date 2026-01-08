@@ -69,9 +69,9 @@ export default function Header({ view, onViewChange }: HeaderProps) {
             >
               Игры
             </button>
-            <button className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
-              Блог
-            </button>
+            <a href="/chatgpt" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
+              ChatGPT
+            </a>
             <button 
               onClick={() => onViewChange('developer')}
               className={`text-sm font-medium transition-colors ${view === 'developer' ? 'text-cyber-purple' : 'text-gray-400 hover:text-white'}`}
