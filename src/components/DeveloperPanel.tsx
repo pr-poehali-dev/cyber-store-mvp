@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useToast } from '@/hooks/use-toast';
 
 interface App {
   id: number;
@@ -21,6 +23,59 @@ interface DeveloperPanelProps {
 }
 
 export default function DeveloperPanel({ mockApps }: DeveloperPanelProps) {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const { toast } = useToast();
+
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      if (file.size > 200 * 1024 * 1024) {
+        toast({
+          title: 'Ошибка',
+          description: 'Файл слишком большой (макс. 200 МБ)',
+          variant: 'destructive',
+        });
+        return;
+      }
+      setSelectedFile(file);
+      toast({
+        title: 'Файл загружен',
+        description: `${file.name} (${(file.size / 1024 / 1024).toFixed(2)} МБ)`,
+      });
+    }
+  };
+
+  const handleDragOver = (event: React.DragEvent) => {
+    event.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleDrop = (event: React.DragEvent) => {
+    event.preventDefault();
+    setIsDragging(false);
+    const file = event.dataTransfer.files?.[0];
+    if (file) {
+      if (file.size > 200 * 1024 * 1024) {
+        toast({
+          title: 'Ошибка',
+          description: 'Файл слишком большой (макс. 200 МБ)',
+          variant: 'destructive',
+        });
+        return;
+      }
+      setSelectedFile(file);
+      toast({
+        title: 'Файл загружен',
+        description: `${file.name} (${(file.size / 1024 / 1024).toFixed(2)} МБ)`,
+      });
+    }
+  };
+
   return (
     <main className="container mx-auto px-4 py-8">
       <section className="max-w-4xl mx-auto animate-fade-in">
@@ -87,11 +142,35 @@ export default function DeveloperPanel({ mockApps }: DeveloperPanelProps) {
 
                 <div>
                   <label className="text-sm font-medium mb-2 block">Файл приложения</label>
-                  <div className="border-2 border-dashed border-cyber-purple/30 rounded-lg p-8 text-center hover:border-cyber-purple transition-colors cursor-pointer">
+                  <input
+                    type="file"
+                    id="file-upload"
+                    accept=".apk,.aab,.ipa"
+                    onChange={handleFileSelect}
+                    className="hidden"
+                  />
+                  <label
+                    htmlFor="file-upload"
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                    className={`block border-2 border-dashed rounded-lg p-8 text-center transition-colors cursor-pointer ${
+                      isDragging ? 'border-cyber-purple bg-cyber-purple/10' : 'border-cyber-purple/30 hover:border-cyber-purple'
+                    }`}
+                  >
                     <Icon name="Upload" size={48} className="mx-auto mb-3 text-cyber-purple" />
-                    <p className="text-sm text-gray-400">Перетащите файл или нажмите для выбора</p>
-                    <p className="text-xs text-gray-500 mt-1">APK, AAB или IPA (макс. 200 МБ)</p>
-                  </div>
+                    {selectedFile ? (
+                      <>
+                        <p className="text-sm text-cyber-purple font-medium">{selectedFile.name}</p>
+                        <p className="text-xs text-gray-400 mt-1">{(selectedFile.size / 1024 / 1024).toFixed(2)} МБ</p>
+                      </>
+                    ) : (
+                      <>
+                        <p className="text-sm text-gray-400">Перетащите файл или нажмите для выбора</p>
+                        <p className="text-xs text-gray-500 mt-1">APK, AAB или IPA (макс. 200 МБ)</p>
+                      </>
+                    )}
+                  </label>
                 </div>
               </CardContent>
               <CardFooter>
